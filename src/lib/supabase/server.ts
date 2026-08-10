@@ -1,4 +1,5 @@
-import { createServerClient } from "@supabase/ssr";
+```ts
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 // Used in Server Components, Route Handlers, and Server Actions.
@@ -14,7 +15,8 @@ export function createClient() {
         get(name: string) {
           return cookieStore.get(name)?.value;
         },
-        set(name: string, value: string, options) {
+
+        set(name: string, value: string, options: CookieOptions) {
           try {
             cookieStore.set({ name, value, ...options });
           } catch {
@@ -22,14 +24,17 @@ export function createClient() {
             // because middleware.ts refreshes the session on every request anyway.
           }
         },
-        remove(name: string, options) {
+
+        remove(name: string, options: CookieOptions) {
           try {
             cookieStore.set({ name, value: "", ...options });
           } catch {
-            // see note above
+            // Called from a Server Component with no request context — safe to ignore.
           }
         },
       },
     }
   );
 }
+```
+
