@@ -227,7 +227,7 @@ export default function Player() {
         <div className={`status-dot ${playing ? "active" : ""}`} />
 
         <span>
-          {playing ? "NOW PLAYING" : "RADIO"}
+          {playing ? "अहिले बज्दैछ" : "रेडियो"}
         </span>
       </div>
 
