@@ -163,7 +163,7 @@ export default function Player() {
         onLoadedMetadata={(e) =>
           setDuration(e.currentTarget.duration)
         }
-        autoPlay={false}
+        autoPlay={playing}
       />
 
       {/* Small glass status indicator */}
