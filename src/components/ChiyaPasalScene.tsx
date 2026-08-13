@@ -165,7 +165,7 @@ export default function ChiyaPasalScene() {
       >
         {/* Spotify */}
         <a
-          href="https://open.spotify.com/"
+          href="https://open.spotify.com/playlist/1MuvRJTyvDO236lb2BDMBV?si=5cde686d4a2a4a47"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Spotify playlist"
