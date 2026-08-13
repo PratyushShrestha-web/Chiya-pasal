@@ -86,6 +86,19 @@ export default function Player() {
     }
   }
 
+  // Auto-play the next song when the track changes
+  useEffect(() => {
+    const audio = audioRef.current;
+
+    if (!audio || !current || !playing) return;
+
+    audio.load();
+
+    audio.play().catch((error) => {
+      console.error("Could not autoplay next song:", error);
+    });
+  }, [idx, current, playing]);
+
   function seek(e: React.MouseEvent<HTMLDivElement>) {
     const audio = audioRef.current;
     const track = trackRef.current;
@@ -163,7 +176,7 @@ export default function Player() {
         onLoadedMetadata={(e) =>
           setDuration(e.currentTarget.duration)
         }
-        autoPlay={playing}
+        autoPlay={false}
       />
 
       {/* Small glass status indicator */}
@@ -249,3 +262,4 @@ export default function Player() {
     </div>
   );
 }
+
