@@ -70,34 +70,13 @@ export default function Player() {
   function go(delta: number) {
     if (songs.length === 0) return;
 
-    const wasPlaying = playing;
-
     setIdx((i) => {
       return (i + delta + songs.length) % songs.length;
     });
 
     setCurTime(0);
     setDuration(0);
-
-    if (wasPlaying) {
-      setTimeout(() => {
-        audioRef.current?.play().catch(() => {});
-      }, 100);
-    }
   }
-
-  // Auto-play the next song when the track changes
-  useEffect(() => {
-    const audio = audioRef.current;
-
-    if (!audio || !current || !playing) return;
-
-    audio.load();
-
-    audio.play().catch((error) => {
-      console.error("Could not autoplay next song:", error);
-    });
-  }, [idx, current, playing]);
 
   function seek(e: React.MouseEvent<HTMLDivElement>) {
     const audio = audioRef.current;
@@ -165,6 +144,7 @@ export default function Player() {
   return (
     <div className="glass-player">
       <audio
+        key={current.audio_url}
         ref={audioRef}
         src={current.audio_url}
         onPlay={() => setPlaying(true)}
@@ -176,7 +156,7 @@ export default function Player() {
         onLoadedMetadata={(e) =>
           setDuration(e.currentTarget.duration)
         }
-        autoPlay={false}
+        autoPlay={playing}
       />
 
       {/* Small glass status indicator */}
@@ -262,4 +242,3 @@ export default function Player() {
     </div>
   );
 }
-
