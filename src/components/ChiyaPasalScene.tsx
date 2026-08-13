@@ -7,18 +7,29 @@ export default function ChiyaPasalScene() {
   const [time, setTime] = useState("");
 
   useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
+   const updateTime = () => {
+  const now = new Date();
 
-      setTime(
-        now.toLocaleTimeString("en-US", {
-          timeZone: "Asia/Kathmandu",
-          hour: "numeric",
-          minute: "2-digit",
-          hour12: true,
-        })
-      );
-    };
+  const timeString = now.toLocaleTimeString("en-US", {
+    timeZone: "Asia/Kathmandu",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+
+  // Convert English digits → Nepali digits
+  const nepaliDigits = timeString.replace(/[0-9]/g, (digit) => {
+    const digits = "०१२३४५६७८९";
+    return digits[Number(digit)];
+  });
+
+  // Convert AM / PM → Nepali
+  const nepaliTime = nepaliDigits
+    .replace("AM", "बिहान")
+    .replace("PM", "बेलुका");
+
+  setTime(nepaliTime);
+};
 
     updateTime();
 
@@ -134,7 +145,7 @@ export default function ChiyaPasalScene() {
           zIndex: 20,
         }}
       >
-        {time} NPT
+        {time} 
       </div>
 
       {/* =========================================
