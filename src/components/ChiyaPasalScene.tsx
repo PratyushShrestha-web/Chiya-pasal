@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -59,10 +60,53 @@ export default function ChiyaPasalScene() {
           background:
             "linear-gradient(180deg, rgba(0,0,0,0.18), transparent 35%, rgba(0,0,0,0.12))",
           pointerEvents: "none",
+          zIndex: 1,
         }}
       />
 
-      {/* Nepal time - top left */}
+{/* =========================================
+    BAJEKO CHIYA PASAL
+========================================= */}
+<div
+  style={{
+    position: "absolute",
+
+    top: "38%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+
+    width: "90vw",
+    maxWidth: "1000px",
+
+    textAlign: "center",
+
+    fontFamily: "'Yatra One', serif",
+
+    color: "#f8f6f3",
+
+    fontSize: "clamp(50px, 9vw, 130px)",
+
+    fontWeight: 400,
+
+    lineHeight: 0.9,
+
+    letterSpacing: "0",
+
+    textShadow:
+      "0 3px 8px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.25)",
+
+    zIndex: 10,
+
+    pointerEvents: "none",
+  }}
+>
+  <div>बाजेको चिया</div>
+  <div>पसल</div>
+</div>
+
+      {/* =========================================
+          NEPAL TIME - TOP LEFT
+      ========================================== */}
       <div
         style={{
           position: "absolute",
@@ -93,7 +137,9 @@ export default function ChiyaPasalScene() {
         {time} NPT
       </div>
 
-      {/* Top right music navigation */}
+      {/* =========================================
+          TOP RIGHT MUSIC NAVIGATION
+      ========================================== */}
       <div
         style={{
           position: "absolute",
@@ -143,7 +189,6 @@ export default function ChiyaPasalScene() {
             background: "rgba(255,255,255,0.06)",
           }}
         >
-          {/* Spotify logo */}
           <svg
             width="18"
             height="18"
@@ -192,7 +237,6 @@ export default function ChiyaPasalScene() {
             background: "rgba(255,255,255,0.06)",
           }}
         >
-          {/* YouTube Music logo */}
           <svg
             width="18"
             height="18"
@@ -201,7 +245,6 @@ export default function ChiyaPasalScene() {
             aria-hidden="true"
           >
             <circle cx="12" cy="12" r="10" fill="#FF0000" />
-
             <circle cx="12" cy="12" r="4" fill="white" />
 
             <path
