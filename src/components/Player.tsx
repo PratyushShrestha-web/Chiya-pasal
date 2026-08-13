@@ -23,6 +23,9 @@ export default function Player() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
 
+  // Remembers that the user has manually started playback.
+  const userStartedRef = useRef(false);
+
   // Load songs from Supabase
   useEffect(() => {
     const supabase = createClient();
@@ -59,11 +62,19 @@ export default function Player() {
     if (!audio) return;
 
     if (audio.paused) {
-      audio.play().catch((error) => {
-        console.error("Could not play audio:", error);
-      });
+      userStartedRef.current = true;
+
+      audio
+        .play()
+        .then(() => {
+          setPlaying(true);
+        })
+        .catch((error) => {
+          console.error("Could not play audio:", error);
+        });
     } else {
       audio.pause();
+      setPlaying(false);
     }
   }
 
@@ -77,6 +88,46 @@ export default function Player() {
     setCurTime(0);
     setDuration(0);
   }
+
+  // When the song changes, automatically play the new song
+  // if the user had already started the player.
+  useEffect(() => {
+    const audio = audioRef.current;
+
+    if (!audio || !current || !userStartedRef.current) {
+      return;
+    }
+
+    function startNextSong() {
+      const currentAudio = audioRef.current;
+
+      if (!currentAudio) return;
+
+      currentAudio
+        .play()
+        .then(() => {
+          setPlaying(true);
+        })
+        .catch((error) => {
+          console.error("AUTO-NEXT PLAY FAILED:", error);
+          console.error("Error name:", error?.name);
+          console.error("Error message:", error?.message);
+          console.error("Audio URL:", current.audio_url);
+        });
+    }
+
+    if (audio.readyState >= 2) {
+      startNextSong();
+    } else {
+      audio.addEventListener("canplay", startNextSong, {
+        once: true,
+      });
+    }
+
+    return () => {
+      audio.removeEventListener("canplay", startNextSong);
+    };
+  }, [idx, current]);
 
   function seek(e: React.MouseEvent<HTMLDivElement>) {
     const audio = audioRef.current;
@@ -147,16 +198,28 @@ export default function Player() {
         key={current.audio_url}
         ref={audioRef}
         src={current.audio_url}
+        preload="auto"
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
-        onEnded={() => go(1)}
+        onEnded={() => {
+          go(1);
+        }}
+        onError={(e) => {
+          console.error(
+            "Audio failed to load:",
+            e.currentTarget.error
+          );
+          console.error(
+            "Audio URL:",
+            current.audio_url
+          );
+        }}
         onTimeUpdate={(e) =>
           setCurTime(e.currentTarget.currentTime)
         }
         onLoadedMetadata={(e) =>
           setDuration(e.currentTarget.duration)
         }
-        autoPlay={playing}
       />
 
       {/* Small glass status indicator */}
