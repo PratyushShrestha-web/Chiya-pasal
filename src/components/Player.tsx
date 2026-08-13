@@ -300,7 +300,7 @@ export default function Player() {
 
       {/* Keyboard hint */}
       <div className="keyboard-hint">
-        SPACE TO PLAY / PAUSE
+        एउटा गीत, एउटा सम्झना...
       </div>
     </div>
   );

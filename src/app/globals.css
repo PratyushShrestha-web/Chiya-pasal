@@ -488,13 +488,20 @@ body:not(.playing) .radio-note { opacity: 0; }
 .keyboard-hint {
   text-align: center;
 
-  margin-top: 15px;
+  margin-top: 13px;
 
-  font-size: 8px;
+  font-family: "Yatra One", serif;
 
-  letter-spacing: 1.5px;
+  font-size: 11px;
 
-  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0;
+
+  color: rgba(255, 255, 255, 0.48);
+
+  text-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.25);
+
+  opacity: 0.8;
 }
 
 /* Empty state */
