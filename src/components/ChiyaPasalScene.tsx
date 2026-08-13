@@ -213,7 +213,7 @@ export default function ChiyaPasalScene() {
 
         {/* YouTube Music */}
         <a
-          href="https://music.youtube.com/"
+          href="https://music.youtube.com/playlist?list=PLKWfEwX6uySY&si=Gjlj97QKqEZxXsHn"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="YouTube Music playlist"
@@ -269,9 +269,9 @@ export default function ChiyaPasalScene() {
             />
           </svg>
 
-          <span>YouTube Music</span>
+          <span>YouTube Music </span>
 
-          <span
+         <span
             style={{
               fontSize: "12px",
               opacity: 0.65,
